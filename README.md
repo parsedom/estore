@@ -1,2 +1,2 @@
-# Ecommerce-Django
+# eStore
 Django Ecommerce Capstone Project
