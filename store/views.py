@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView
 
 from store.models import Product
 from category.models import Category
+from carts.models import CartItem, Cart
+from eStore.utils import _get_cart_id
 
 
 class StoreListView(ListView):
@@ -31,22 +33,12 @@ class ProductDetailView(DetailView):
     template_name = 'store/product_detail.html'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
-    # products = Product.objects.all().filter(is_available=True)
 
-    # all_categories = Category.objects.all()
+    # context_object_name = 'product'
 
-    # def get(self, request, *args, **kwargs):
-    #     slug = self.kwargs.get('product_slug')
-    #     print(2222, slug)
-    #     product = get_object_or_404(Product, slug=slug)
-    #     return super().get(request, *args, **kwargs)
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     slug = self.kwargs.get('product_slug')
-    #     print(1111, slug)
-    #     product = get_object_or_404(Product, slug=slug)
-    #
-    #     context['product'] = product
-    #     # context['categories'] = self.all_categories
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        in_cart = CartItem.objects.filter(cart__cart_id=_get_cart_id(self.request), product=product).exists()
+        context['in_cart'] = in_cart
+        return context
