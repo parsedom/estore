@@ -7,6 +7,8 @@ __pycache__/
 *.so
 .idea/
 static/
+media/
+stuff/
 # Distribution / packaging
 .Python
 build/
