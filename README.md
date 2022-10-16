@@ -8,3 +8,4 @@ TOLEARN
 
 1. Context processors
 2. What reverse does
+3. Views(TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView) - check implementations
