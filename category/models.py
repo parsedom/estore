@@ -10,6 +10,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = 'Category'
+        # db_table = 'Category'
         verbose_name_plural = 'Categories'
 
     def __str__(self):
