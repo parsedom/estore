@@ -109,3 +109,64 @@ class AddToCartView(TemplateView):
             cart_item.save()
 
         return redirect('carts:cart_detail')
+
+
+class RemoveFromCartView(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+
+        product = Product.objects.get(id=product_id)
+        try:
+            cart = Cart.objects.get(cart_id=_get_cart_id(request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=_get_cart_id(request)
+            )
+            cart.save()
+
+        try:
+            cart_item = CartItem.objects.get(product=product, cart=cart)
+            cart_item.delete()
+        except CartItem.DoesNotExist:
+            pass
+
+        return redirect('carts:cart_detail')
+
+
+class UpdateCartItemQuantityView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        action = kwargs.get('action', 'add')
+        quantity = kwargs.get('quantity', 1)
+        product = get_object_or_404(Product, id=product_id)
+
+        try:  # TODO
+            cart = Cart.objects.get(cart_id=_get_cart_id(request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=_get_cart_id(request)
+            )
+            cart.save()
+
+        try:
+            cart_item = CartItem.objects.get(product=product, cart=cart)
+            if cart_item.quantity >= 1 and action == 'remove' and cart_item.quantity <= quantity:
+                cart_item.delete()
+
+            elif cart_item.quantity >= 1 and action == 'remove' and cart_item.quantity > quantity:
+                cart_item.quantity -= quantity
+                cart_item.save()
+
+            elif action == 'add':
+                total_addable = product.stock - cart_item.quantity
+                if total_addable > quantity:
+                    cart_item.quantity += quantity
+                else:
+                    cart_item.quantity += total_addable
+
+                cart_item.save()
+        except CartItem.DoesNotExist:
+            pass
+
+        return redirect('carts:cart_detail')
