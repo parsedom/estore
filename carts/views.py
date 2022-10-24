@@ -86,6 +86,37 @@ class AddToCartView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
+        color = request.GET.get('color')
+        size = request.GET.get('size')
+        product = Product.objects.get(id=product_id)
+        try:
+            cart = Cart.objects.get(cart_id=_get_cart_id(request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=_get_cart_id(request)
+            )
+            cart.save()
+
+        try:
+            cart_item = CartItem.objects.get(product=product, cart=cart)
+            if cart_item.quantity < cart_item.product.stock:
+                cart_item.quantity += 1
+            cart_item.save()
+        except CartItem.DoesNotExist:
+            cart_item = CartItem.objects.create(
+                product=product,
+                quantity=1,
+                cart=cart
+            )
+            cart_item.save()
+
+        return redirect('carts:cart_detail')
+
+    def post(self, request, *args, **kwargs):
+        breakpoint()
+        product_id = kwargs.get('product_id')
+        color = request.POST.get('color')
+        size = request.POST.get('size')
         product = Product.objects.get(id=product_id)
         try:
             cart = Cart.objects.get(cart_id=_get_cart_id(request))
