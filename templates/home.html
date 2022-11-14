@@ -52,3 +52,12 @@
     </html>
 
 {% endblock %}
+
+
+{% block js %}
+    <script>
+        setTimeout(function () {
+            $('#message').fadeOut('slow')
+        }, 4000)
+    </script>
+{% endblock %}
