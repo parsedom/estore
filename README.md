@@ -15,3 +15,4 @@ TODO
 
 1. Fix remove from cart, as now it needs the variation infor(which is to be sent from the template), use the varation
    info and find the right cart item and reduce the quantity
+2. Add toast instead of normal django messages
