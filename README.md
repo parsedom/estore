@@ -10,4 +10,8 @@ TOLEARN
 2. What reverse does
 3. Views(TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView) - check implementations
 
-Resume from Variations
+Working on signin/register
+TODO
+
+1. Fix remove from cart, as now it needs the variation infor(which is to be sent from the template), use the varation
+   info and find the right cart item and reduce the quantity

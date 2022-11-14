@@ -61,17 +61,17 @@
                                 </div> <!-- row.// -->
                                 <hr>
                                 {% if product.stock > 0 and product.is_available %}
-                                    {% if in_cart == True %}
-                                        <a href="#" class="btn  btn-success disabled"> Added to cart <i
-                                                class="fas fa-check"></i>
-                                        </a>
-                                        <a href="{% url 'carts:cart_detail' %}" class="btn  btn-outline-primary">View
-                                            Cart <i class="fas fa-eye"></i> </a>
-                                    {% else %}
-                                        <button type="submit" class="btn  btn-primary">
-                                            <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
-                                        </button>
-                                    {% endif %}
+                                    {#                                    {% if in_cart == True %}#}
+                                    {#                                        <a href="#" class="btn  btn-success disabled"> Added to cart <i#}
+                                    {#                                                class="fas fa-check"></i>#}
+                                    {#                                        </a>#}
+                                    {#                                        <a href="{% url 'carts:cart_detail' %}" class="btn  btn-outline-primary">View#}
+                                    {#                                            Cart <i class="fas fa-eye"></i> </a>#}
+                                    {#                                    {% else %}#}
+                                    <button type="submit" class="btn  btn-primary">
+                                        <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    {#                                    {% endif %}#}
                                 {% else %}
                                     <a href="./product-detail.html" class="btn  btn-danger disabled"> <span
                                             class="text">Out of Stock</span> <i class="fas fa-shopping-cart"></i> </a>
