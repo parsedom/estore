@@ -14,3 +14,4 @@ urlpatterns = [
     path('product/<slug:slug>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('search/', views.SearchStoreListView.as_view(), name='search_results'),
 ]
+
